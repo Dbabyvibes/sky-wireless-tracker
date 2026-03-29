@@ -42,7 +42,8 @@ export default function App() {
   const totalProfit = totalRevenue - totalCosts;
 
   const handleFormChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleAddInventory = () => {
@@ -313,12 +314,12 @@ export default function App() {
                     <div key={field.name} style={{ display: "flex", flexDirection: "column" }}>
                       <label style={labelStyle}>{field.label.toUpperCase()}</label>
                       {field.type === "select" ? (
-                        <select name={field.name} onChange={handleFormChange} style={inputStyle}>
+                        <select name={field.name} value={formData[field.name] || ""} onChange={handleFormChange} style={inputStyle}>
                           <option value="">Select...</option>
                           {field.options.map((o) => <option key={o} value={o}>{o}</option>)}
                         </select>
                       ) : (
-                        <input type={field.type} name={field.name} placeholder={field.placeholder} onChange={handleFormChange} style={inputStyle} />
+                        <input type={field.type} name={field.name} placeholder={field.placeholder} value={formData[field.name] || ""} onChange={handleFormChange} style={inputStyle} />
                       )}
                     </div>
                   ))}
